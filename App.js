@@ -1,37 +1,56 @@
-import { StatusBar } from 'expo-status-bar';
 import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import AppLoading from 'expo-app-loading';
-import {
-  useFonts,
-  Lato_100Thin,
-  Lato_300Light,
-  Lato_400Regular,
-  Lato_700Bold,
-  Lato_900Black,
-} from '@expo-google-fonts/lato';
 import HomePage from './components/HomePage';
+import DetailsPage from './components/DetailsPage';
+import ProfilePage from './components/ProfilePage';
+import RequestPage from './components/RequestPage';
+import { NavigationContainer } from '@react-navigation/native';
+import { createStackNavigator } from '@react-navigation/stack';
+import TabNavigator from './components/TabNavigator';
+import LoginPage from './components/LoginPage';
+import RegisterPage from './components/RegisterPage';
+
+const Stack = createStackNavigator();
 
 export default function App() {
-  let [fontsLoaded] = useFonts({
-    Lato_100Thin,
-    Lato_300Light,
-    Lato_400Regular,
-    Lato_700Bold,
-    Lato_900Black,
-  });
-
-  if (!fontsLoaded) {
-      return <AppLoading />;
-  } else {
+  
     return (
-      <View style={styles.container}>
-        <Text style={styles.text}>Open up App.js to start working on your app!</Text>
-        <HomePage />
-        <StatusBar style="auto" />
-      </View>
+      <NavigationContainer>
+        <Stack.Navigator>
+          <Stack.Screen
+            name="TabNavigator"
+            component={TabNavigator}
+            options={{ headerShown: false }}
+          />
+          <Stack.Screen
+            name="DetailsPage"
+            component={DetailsPage}
+            options={{ headerShown: false }}
+          />
+          <Stack.Screen
+            name="ProfilePage"
+            component={ProfilePage}
+            options={{ headerShown: false }}
+          />
+          <Stack.Screen
+            name="RequestPage"
+            component={RequestPage}
+            options={{ headerShown: false }}
+          />
+          <Stack.Screen
+            name="LoginPage"
+            component={LoginPage}
+            options={{ headerShown: false }}
+          />
+          <Stack.Screen
+            name="RegisterPage"
+            component={RegisterPage}
+            options={{ headerShown: false }}
+          />
+        </Stack.Navigator>
+      </NavigationContainer>
     );
-  };
 }
 
 const styles = StyleSheet.create({
@@ -40,8 +59,5 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
     alignItems: 'center',
     justifyContent: 'center',
-  },
-  text: {
-    fontFamily: 'Lato_700Bold'
   }
 });
