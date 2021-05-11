@@ -8,38 +8,18 @@ import { View,
 
 import colors from '../config/colors';
 import { Entypo } from '@expo/vector-icons';
-import {
-    useFonts,
-    Lato_100Thin,
-    Lato_300Light,
-    Lato_400Regular,
-    Lato_700Bold,
-    Lato_900Black,
-  } from '@expo-google-fonts/lato';
-  
-import AppLoading from 'expo-app-loading';
-
 const height = Dimensions.get('window').height;
 
 
 const DetailsPage = ({route, navigation}) => {
 
-    let [fontsLoaded] = useFonts({
-        Lato_100Thin,
-        Lato_300Light,
-        Lato_400Regular,
-        Lato_700Bold,
-        Lato_900Black,
-      });
 
     const {item} = route.params;
-    if (!fontsLoaded) {
-      return <AppLoading />;
-    } else {
+   
       return (
         <View style={styles.container}>
           <ImageBackground
-            source={item.imageBig}
+            source={item.image}
             style={styles.backgroundImage}
           >
             <TouchableOpacity
@@ -49,10 +29,10 @@ const DetailsPage = ({route, navigation}) => {
               <Entypo name="chevron-left" size={32} color={colors.white} />
             </TouchableOpacity>
             <View style={styles.titlesWrapper}>
-              <Text style={styles.itemTitle}>{item.title}</Text>
+              <Text style={styles.itemTitle}>{item.name}</Text>
               <View style={styles.locationWrapper}>
                 <Entypo name="location-pin" size={24} color={colors.white} />
-                <Text style={styles.locationText}>{item.location}</Text>
+                <Text style={styles.locationText}>{item.category}</Text>
               </View>
             </View>
           </ImageBackground>
@@ -76,14 +56,14 @@ const DetailsPage = ({route, navigation}) => {
               <View style={styles.infoItem}>
                 <Text style={styles.infoTitle}>RATING</Text>
                 <View style={styles.infoTextWrapper}>
-                  <Text style={styles.infoText}>${item.rating}</Text>
+                  <Text style={styles.infoText}>{item.rating}</Text>
                   <Text style={styles.infoSubText}>/5</Text>
                 </View>
               </View>
               <View style={styles.infoItem}>
                 <Text style={styles.infoTitle}>DURATION</Text>
                 <View style={styles.infoTextWrapper}>
-                  <Text style={styles.infoText}>${item.duration}</Text>
+                  <Text style={styles.infoText}>{item.duration}</Text>
                   <Text style={styles.infoSubText}> minutes</Text>
                 </View>
               </View>
@@ -98,7 +78,6 @@ const DetailsPage = ({route, navigation}) => {
           </View>
         </View>
       );
-    }
 }
 
 const styles = StyleSheet.create({

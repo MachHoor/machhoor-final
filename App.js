@@ -1,12 +1,11 @@
 import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
-import AppLoading from 'expo-app-loading';
-import HomePage from './components/HomePage';
-import DetailsPage from './components/DetailsPage';
-import ProfilePage from './components/ProfilePage';
-import RequestPage from './components/RequestPage';
+import { StyleSheet } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
+
+import RequestPage from './components/RequestPage';
+import DetailsPage from './components/DetailsPage';
+import ProfilePage from './components/ProfilePage';
 import TabNavigator from './components/TabNavigator';
 import LoginPage from './components/LoginPage';
 import RegisterPage from './components/RegisterPage';
@@ -54,10 +53,4 @@ export default function App() {
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  }
 });
