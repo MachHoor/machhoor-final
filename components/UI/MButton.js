@@ -1,11 +1,12 @@
 //import liraries
 import React, { Component } from 'react';
 import { TouchableOpacity, Text, StyleSheet } from 'react-native';
+import colors from '../../config/colors';
 
 // create a component
-const MButton = ({ text, onPress }) => {
+const MButton = ({ text, onPress, disabled }) => {
     return (
-        <TouchableOpacity style={styles.buttonWrapper} onPress={onPress}>
+        <TouchableOpacity disabled={disabled} style={[styles.buttonWrapper, {backgroundColor: disabled ? colors.gray : colors.orange}]} onPress={onPress}>
         <Text style={styles.buttonText}>{text}</Text>
       </TouchableOpacity>
     );
