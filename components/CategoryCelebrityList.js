@@ -1,28 +1,47 @@
 //import liraries
-import React, { Component } from 'react';
-import { View, Text, StyleSheet, FlatList } from 'react-native';
-import DATA from '../config/data';
-import CelebrityListItem from './CelebrityListItem';
+import React, { Component } from "react";
+import { View, Text, StyleSheet, FlatList } from "react-native";
+import CelebrityListItem from "./CelebrityListItem";
 
 // create a component
-const CategoryCelebrityList = ({navigation}) => {
-    let categoriesData = DATA.categories;
+const CategoryCelebrityList = ({ navigation, categories }) => {
 
+  const renderCategoryList = (category) => {
+    
     return (
-        <View style={styles.categoryListWrapper}>
-            <Text style={styles.categoryListTitle}>Actors</Text>
-            <View style={styles.categoryListItemsWrapper}>
-              <FlatList
-                style={{ marginLeft: 20 }}
-                data={categoriesData}
-                renderItem={({item}) => <CelebrityListItem celebrityItem={item} navigation={navigation} />}
-                keyExtractor={(item) => item.id}
-                horizontal
-                showsHorizontalScrollIndicator={false}
+      <View style={styles.categoryListWrapper}>
+        <Text style={styles.categoryListTitle}>{category.name}</Text>
+        <View style={styles.categoryListItemsWrapper}>
+          <FlatList
+            style={{ marginLeft: 20 }}
+            data={category.profiles}
+            renderItem={({ item }) => {
+              item.category = category;
+              return (
+              <CelebrityListItem
+                celebrityItem={item}
+                navigation={navigation}
               />
-            </View>
-          </View>
+            )
+            }}
+            keyExtractor={(profile) => profile.id}
+            horizontal
+            showsHorizontalScrollIndicator={false}
+          />
+        </View>
+      </View>
     );
+  };
+
+  return (
+        <FlatList 
+          data={categories}
+          renderItem={ ({item}) => renderCategoryList(item)}
+          keyExtractor={(category) => category.id}
+          vertical
+          showsHorizontalScrollIndicator={false}>
+        </FlatList>
+  );
 };
 
 // define your styles
@@ -38,7 +57,7 @@ const styles = StyleSheet.create({
   },
   categoryListItemsWrapper: {
     paddingVertical: 20,
-  }
+  },
 });
 
 //make this component available to the app

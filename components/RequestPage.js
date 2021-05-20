@@ -44,8 +44,9 @@ const RequestPage = ({ route, navigation }) => {
         currentUser.profile.id,
         currentUser.profile.fullName
       );
-      onSubmitProps.resetForm();
       setIsLoading(false);
+      onSubmitProps.resetForm();
+      navigation.navigate('MyRequestsPage');
     } catch (error) {}
   };
 
@@ -100,7 +101,7 @@ const RequestPage = ({ route, navigation }) => {
             <Formik
               validationSchema={SubmitRequestSchema}
               initialValues={{ occasion: "", who: "", instructions: "" }}
-              onSubmit={(values) => onSubmit(values)}
+              onSubmit={onSubmit}
             >
               {({
                 handleChange,

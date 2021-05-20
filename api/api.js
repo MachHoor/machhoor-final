@@ -68,7 +68,7 @@ export const submitRequest = async (occasion, who, instructions, celebrityId, us
             requesterProfileId: userId,
         });
 
-        console.log(response);
+        //console.log(response);
         if(response.status == 200){
             return response.data.data;
         }
@@ -84,8 +84,39 @@ export const getMyRequests = async (profileId) => {
         console.log('calling getMyRequests with profileId=' + profileId);
         const response = await axios.get(endpoints.GetMyRequests(profileId));
 
-        console.log(response);
+        //console.log(response);
         if(response.status == 200){
+            return response.data.data;
+        }
+
+        return null;
+    } catch (error) {
+        console.error(error);
+    }
+}
+
+export const getCelebrityAndUserRequests = async (celebrityProfileId, userProfileId) => {
+    try {
+        console.log('calling getCelebrityAndUserRequests...');
+        const response = await axios.get(endpoints.GetCelebrityAndUserRequests(celebrityProfileId, userProfileId));
+
+        // console.log(response.data);
+        if(response.status == 200)
+            return response.data.data;
+        
+        return null;
+    } catch (error) {
+        console.error(error);
+    }
+}
+
+export const getCategories = async () => {
+    try {
+        console.log('calling getCategories...');
+        const response = await axios.get(endpoints.GetCategories);
+        // console.log(response.data);
+        if(response.status == 200){
+            console.log(response.data.data.length);
             return response.data.data;
         }
 

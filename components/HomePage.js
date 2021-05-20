@@ -24,6 +24,7 @@ import profile from "../assets/images/person.jpg";
 import AppLoading from "expo-app-loading";
 import TrendingSection from "./TrendingSection";
 import CategoryCelebrityList from "./CategoryCelebrityList";
+import CategoriesSection from "./CategoriesSection";
 
 const HomePage = ({ navigation }) => {
 
@@ -40,9 +41,8 @@ const HomePage = ({ navigation }) => {
   } else {
     return (
       <View style={styles.container}>
-        <ScrollView>
-          {/* Header */}
-          <SafeAreaView>
+      {/* Header */}
+       <SafeAreaView>
             <View style={styles.menuWrapper}>
               <MaterialCommunityIcons
                 name="menu"
@@ -57,12 +57,12 @@ const HomePage = ({ navigation }) => {
               </TouchableOpacity>
             </View>
           </SafeAreaView>
-
-          { /* Trending */}
+        <ScrollView>        
+          {/* { /* Trending */}
           <TrendingSection navigation={navigation} />
 
           {/* Categories */}
-          <CategoryCelebrityList navigation={navigation} />
+          <CategoriesSection navigation={navigation} />
 
         </ScrollView>
       </View>

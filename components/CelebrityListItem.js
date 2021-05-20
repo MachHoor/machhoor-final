@@ -4,14 +4,16 @@ import { View, Text, StyleSheet, TouchableOpacity, ImageBackground } from 'react
 
 // create a component
 const CelebrityListItem = ({celebrityItem, navigation}) => {
+  console.log('CelebrityListItem..');
+  console.log(celebrityItem);
     return (
       <TouchableOpacity onPress={() => navigation.navigate("DetailsPage", { item: celebrityItem, }) }>
         <ImageBackground
-          source={celebrityItem.image}
+          source={{ uri: celebrityItem.profilePicture.thumbnailPath}}
           style={styles.cardItem}
           imageStyle={styles.cardItemImage}
         >
-          <Text style={styles.cardItemText}>{celebrityItem.name}</Text>
+          <Text style={styles.cardItemText}>{celebrityItem.fullName}</Text>
         </ImageBackground>
       </TouchableOpacity>
     );

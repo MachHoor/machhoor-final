@@ -8,13 +8,41 @@ import { View,
 
 import colors from '../config/colors';
 import { Entypo } from '@expo/vector-icons';
+import { useContext } from 'react';
+import { AuthContext } from '../auth/AuthProvider';
+import { useEffect } from 'react';
+import { getCelebrityAndUserRequests } from '../api/api';
+import { useState } from 'react';
+import MButton from './UI/MButton';
 const height = Dimensions.get('window').height;
 
 
 const DetailsPage = ({route, navigation}) => {
 
+  const {item} = route.params;
+  const {currentUser} = useContext(AuthContext);
+  const [alreadyRequested, setAlreadyRequested] = useState(false);
 
-    const {item} = route.params;
+  useEffect(() => {
+    async function getCelebrityAndUserRequestsLocal(){
+      try{
+        console.log(item);
+        const celebrityProfileId = item.id;
+        const userProfileId = currentUser.profile.id;
+
+        const requests = await getCelebrityAndUserRequests(celebrityProfileId, userProfileId);
+
+        if(requests)
+            setAlreadyRequested(requests.length > 0);
+      }catch(error){
+        console.error(error);
+        setAlreadyRequested(false);
+      }
+    }
+
+    getCelebrityAndUserRequestsLocal();
+  }, []);
+
    
       return (
         <View style={styles.container}>
@@ -69,12 +97,18 @@ const DetailsPage = ({route, navigation}) => {
               </View>
             </View>
 
-            <TouchableOpacity
-              style={styles.buttonWrapper}
-              onPress={() => navigation.navigate('RequestPage', {item: item})}
-            >
-              <Text style={styles.buttonText}>Request a Video</Text>
-            </TouchableOpacity>
+            {alreadyRequested ? (
+              <Text style={{marginHorizontal:20, marginVertical:40, fontFamily: 'Lato_400Regular', color:colors.darkGray}}>
+                You already submitted a request to {item.fullName}. 
+                You will be notified once it's completed.
+              </Text>
+            ):(
+              <View style={{marginHorizontal: 20}}>
+                <MButton text="Request a Video" disabled={alreadyRequested} onPress={() => navigation.navigate('RequestPage', {item: item})} />
+            </View>
+            )}
+
+            
           </View>
         </View>
       );
@@ -151,7 +185,7 @@ const styles = StyleSheet.create({
       fontFamily: 'Lato_400Regular',
       fontSize: 16,
       color: colors.darkGray,
-      height: 85,
+      // height: 85,
     },
     infoWrapper: {
       flexDirection: 'row',

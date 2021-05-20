@@ -53,7 +53,7 @@ const ProfilePage = ({route, navigation}) => {
                 <Entypo name="chevron-right" size={32} color={colors.black} />
               </View>
             </TouchableOpacity>
-            <TouchableOpacity>
+            <TouchableOpacity onPress={()=> navigation.navigate("FavoritesPage")}>
               <View style={styles.menuItem}>
                 <View style={styles.menuItemInner}>
                   <Entypo

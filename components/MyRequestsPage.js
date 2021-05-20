@@ -9,18 +9,41 @@ import {
   TouchableOpacity,
   Image,
   FlatList,
-  InteractionManager
+  ImageBackground
 } from "react-native";
 
 import profile from "../assets/images/person.jpg";
 import { getMyRequests } from '../api/api';
 import { AuthContext } from "../auth/AuthProvider";
+import { ScrollView } from "react-native-gesture-handler";
 
 // create a component
 const MyRequestsPage = ({navigation}) => {
 
   const { currentUser } = useContext(AuthContext);
   const [myRequests, setMyRequests] = useState([]);
+
+  const renderRequest = ({ item }) => {
+    console.log('renderRequest');
+    console.log(item.requestForProfile);
+    return (
+      <TouchableOpacity
+        style={styles.learnMoreItemsWrapper}
+        // onPress={() => navigation.navigate("DetailsPage", { item: item })}
+      >
+        <ImageBackground
+          resizeMethod="resize"
+          source={{ uri: item.requestForProfile.profilePicture.thumbnailPath }}
+          style={styles.learnMoreItem}
+          imageStyle={styles.learnMoreItemImage}
+        >
+          <Text style={styles.learnMoreItemText}>
+            {item.requestForProfile.fullName}
+          </Text>
+        </ImageBackground>
+      </TouchableOpacity>
+    );
+  };
 
   useEffect(() => {
     
@@ -54,24 +77,13 @@ const MyRequestsPage = ({navigation}) => {
           </TouchableOpacity>
         </View>
       </SafeAreaView>
+      <ScrollView>
+            <Text style={[styles.title, {marginHorizontal: 20}]}>My Requests</Text>
       <View style={styles.formWrapper}>
-            <Text
-              style={styles.title}
-            >
-              My Requests
-            </Text>
             <Text style={styles.statusText}>New</Text>
             <FlatList
               data={myRequests}
-              renderItem={({item}) => {
-                return (
-                  <View >
-                  <Text style={{ color: 'black', marginVertical: 5 }}>
-                    From: {item.from} - Insctructions: {item.instructions} 
-                  </Text>
-                </View>
-                )
-              }}
+              renderItem={renderRequest}
               keyExtractor={(item) => item.id}
               showsHorizontalScrollIndicator={false}
             />
@@ -80,6 +92,7 @@ const MyRequestsPage = ({navigation}) => {
             <Text style={styles.statusText}>Rejected</Text>
             
           </View>
+      </ScrollView>
     </View>
   );
 };
@@ -87,7 +100,7 @@ const MyRequestsPage = ({navigation}) => {
 // define your styles
 const styles = StyleSheet.create({
   statusText:{
-    marginVertical: 20,
+    marginVertical: 10,
   },
   title:{
     fontFamily: "Lato_700Bold",
@@ -113,6 +126,24 @@ const styles = StyleSheet.create({
   formWrapper: {
     marginTop: 20,
     paddingHorizontal: 20,
+  },
+  learnMoreItem: {
+    width: "100%",
+    height: 80,
+  },
+  learnMoreItemImage: {
+    borderRadius: 20,
+    resizeMode: "cover",
+  },
+  learnMoreItemText: {
+    fontFamily: "Lato_700Bold",
+    fontSize: 18,
+    color: colors.white,
+    marginHorizontal: 10,
+    marginVertical: 50,
+  },
+  learnMoreItemsWrapper: {
+    paddingVertical: 20,
   },
 });
 

@@ -34,12 +34,9 @@ const LoginPage = ({ navigation }) => {
       .required("Password is required."),
   });
 
-  const onSubmit = async (values) => {
+  const onSubmit = async ({email, password}) => {
     try {
-      login(values.email, values.password);
-      // console.log('getting all keys...');
-      // const xxx = await AsyncStorage.getAllKeys();
-      // console.log(xxx);
+      login(email, password);
     } catch (error) {}
   };
 
