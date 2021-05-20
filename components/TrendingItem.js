@@ -14,18 +14,18 @@ const TrendingItem = ({celebrityItem, navigation}) => {
           }
         >
           <ImageBackground
-            source={celebrityItem.image}
+            source={{ uri: celebrityItem.profilePicture.thumbnailPath }}
             style={[styles.trendingItem]}
             imageStyle={styles.trendingItemImage}
           >
-            <Text style={styles.trendingItemName}>{celebrityItem.name}</Text>
+            <Text style={styles.trendingItemName}>{celebrityItem.fullName}</Text>
             <View style={styles.trendingItemCategoryWrapper}>
               <MaterialCommunityIcons
                 name="account-star-outline"
                 size={18}
                 color={colors.white}
               />
-              <Text style={styles.trendingItemCategoryText}>{celebrityItem.category}</Text>
+              <Text style={styles.trendingItemCategoryText}>{celebrityItem.category.name}</Text>
             </View>
           </ImageBackground>
         </TouchableOpacity>

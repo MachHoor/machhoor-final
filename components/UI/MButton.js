@@ -6,7 +6,7 @@ import colors from '../../config/colors';
 // create a component
 const MButton = ({ text, onPress, disabled }) => {
     return (
-        <TouchableOpacity disabled={disabled} style={[styles.buttonWrapper, {backgroundColor: disabled ? colors.gray : colors.orange}]} onPress={onPress}>
+        <TouchableOpacity disabled={disabled} style={[styles.buttonWrapper, {backgroundColor: disabled ? colors.lightGray : colors.orange}]} onPress={onPress}>
         <Text style={styles.buttonText}>{text}</Text>
       </TouchableOpacity>
     );

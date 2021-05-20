@@ -1,46 +1,27 @@
-import React from 'react';
+import React, {useContext, useEffect} from 'react';
 import {
   View,
   Text,
   StyleSheet,
   Image,
   ScrollView,
-  ImageBackground,
-  FlatList, 
   TouchableOpacity,
   SafeAreaView
 } from 'react-native';
-import {
-    useFonts,
-    Lato_100Thin,
-    Lato_300Light,
-    Lato_400Regular,
-    Lato_700Bold,
-    Lato_900Black,
-  } from '@expo-google-fonts/lato';
 import colors from '../config/colors';
 import { MaterialCommunityIcons, Entypo } from '@expo/vector-icons';
 import profile from '../assets/images/person.jpg';
-import AppLoading from 'expo-app-loading';
-import { TextInput } from 'react-native-gesture-handler';
-import { color } from 'react-native-reanimated';
 import MButtonOutlined from './UI/MButtonOutlined';
+import { AuthContext } from '../auth/AuthProvider';
 
 const ProfilePage = ({route, navigation}) => {
- 
-  let [fontsLoaded] = useFonts({
-    Lato_100Thin,
-    Lato_300Light,
-    Lato_400Regular,
-    Lato_700Bold,
-    Lato_900Black,
-  });
 
-  //const {item} = route.params;
+  const { logout, currentUser } = useContext(AuthContext);
 
-  if (!fontsLoaded) {
-    return <AppLoading />;
-  } else {
+  useEffect(() => {
+    console.log(currentUser);
+  }, []);
+
     return (
       <View style={styles.container}>
         <ScrollView>
@@ -50,17 +31,12 @@ const ProfilePage = ({route, navigation}) => {
               <TouchableOpacity onPress={() => navigation.goBack()}>
                 <Entypo name="chevron-left" size={32} color={colors.black} />
               </TouchableOpacity>
-              {/* <TouchableOpacity
-                onPress={() => navigation.navigate("ProfilePage")}
-              >
-                <Image source={profile} style={styles.profileImage} />
-              </TouchableOpacity> */}
             </View>
           </SafeAreaView>
           <View style={styles.header}>
             <Image source={profile} style={styles.profileImage} />
-            <Text style={styles.fullName}>Majdi Saibi</Text>
-            <Text style={styles.email}>saibimajdi@outlook.com</Text>
+            <Text style={styles.fullName}>{currentUser.profile && currentUser.profile.fullName}</Text>
+            <Text style={styles.email}>{currentUser.email}</Text>
           </View>
           <View style={styles.ProfileMenu}>
             <TouchableOpacity>
@@ -91,7 +67,7 @@ const ProfilePage = ({route, navigation}) => {
                 <Entypo name="chevron-right" size={32} color={colors.black} />
               </View>
             </TouchableOpacity>
-            <TouchableOpacity>
+            <TouchableOpacity onPress={()=> navigation.navigate("MyRequestsPage")}>
               <View style={styles.menuItem}>
                 <View style={styles.menuItemInner}>
                   <Entypo
@@ -106,18 +82,15 @@ const ProfilePage = ({route, navigation}) => {
               </View>
             </TouchableOpacity>
             
-            <MButtonOutlined text="Log Out" onPress={() => navigation.navigate("RegisterPage")} />
+            <MButtonOutlined text="Log Out" onPress={() => logout()} />
           </View>
         </ScrollView>
       </View>
     );
-  }
 };
 
 const styles = StyleSheet.create({
   ProfileMenu: {
-    // borderWidth: 2,
-    // borderColor: '#000',
     marginHorizontal: 30,
     marginVertical: 40
   },

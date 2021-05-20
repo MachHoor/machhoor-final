@@ -3,12 +3,29 @@ import React, { Component } from 'react';
 import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
 import TrendingList from './TrendingList';
 import DATA from '../config/data';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+import { getCelebrities } from '../api/api';
 
 // create a component
 const TrendingSection = ({navigation}) => {
     let trendingItems = DATA.trending;
-    let [trendingData, setTrendingData] = useState(trendingItems);  
+    let [trendingData, setTrendingData] = useState(trendingItems);
+    let [celebrities, setCelebrities] = useState(null);
+
+    useEffect(() => {
+
+      async function getCelebritiesLocal(){
+        console.log('calling setCelebrities...');
+        const c = await getCelebrities();
+        setCelebrities(c);
+        console.log('calling setCelebrities ENDED...');
+        //console.log(c);
+        
+      }
+      console.log('calling getCelebritiesLocal...');
+      getCelebritiesLocal();
+    }, []);
+
     return (
       <View style={styles.discoverWrapper}>
         <Text style={styles.discoverTitle}>Trending</Text>
@@ -44,7 +61,7 @@ const TrendingSection = ({navigation}) => {
           </TouchableOpacity>
           <Text style={styles.discoverCategoryText}>Comedian</Text>
         </View>
-        <TrendingList trendingData={trendingData} navigation={navigation} />
+        <TrendingList trendingData={trendingData} celebrities={celebrities} navigation={navigation} />
       </View>
     );
 };
@@ -69,7 +86,7 @@ const styles = StyleSheet.create({
         marginRight: 30,
         fontFamily: 'Lato_400Regular',
         fontSize: 16,
-        color: colors.gray,
+        color: colors.lightGray,
       },
 });
 

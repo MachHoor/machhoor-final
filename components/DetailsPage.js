@@ -19,7 +19,7 @@ const DetailsPage = ({route, navigation}) => {
       return (
         <View style={styles.container}>
           <ImageBackground
-            source={item.image}
+            source={{ uri: item.profilePicture.thumbnailPath}}
             style={styles.backgroundImage}
           >
             <TouchableOpacity
@@ -29,10 +29,10 @@ const DetailsPage = ({route, navigation}) => {
               <Entypo name="chevron-left" size={32} color={colors.white} />
             </TouchableOpacity>
             <View style={styles.titlesWrapper}>
-              <Text style={styles.itemTitle}>{item.name}</Text>
+              <Text style={styles.itemTitle}>{item.fullName}</Text>
               <View style={styles.locationWrapper}>
                 <Entypo name="location-pin" size={24} color={colors.white} />
-                <Text style={styles.locationText}>{item.category}</Text>
+                <Text style={styles.locationText}>{item.category.name}</Text>
               </View>
             </View>
           </ImageBackground>
@@ -42,29 +42,29 @@ const DetailsPage = ({route, navigation}) => {
             </View>
             <View style={styles.descriptionTextWrapper}>
               <Text style={styles.descriptionTitle}>Description</Text>
-              <Text style={styles.descriptionText}>{item.description}</Text>
+              <Text style={styles.descriptionText}>{item.bio}</Text>
             </View>
 
             <View style={styles.infoWrapper}>
               <View style={styles.infoItem}>
                 <Text style={styles.infoTitle}>PRICE</Text>
                 <View style={styles.infoTextWrapper}>
-                  <Text style={styles.infoText}>${item.price}</Text>
+                  <Text style={styles.infoText}>100 DT</Text>
                   <Text style={styles.infoSubText}>/minute</Text>
                 </View>
               </View>
               <View style={styles.infoItem}>
                 <Text style={styles.infoTitle}>RATING</Text>
                 <View style={styles.infoTextWrapper}>
-                  <Text style={styles.infoText}>{item.rating}</Text>
+                  <Text style={styles.infoText}>4.5</Text>
                   <Text style={styles.infoSubText}>/5</Text>
                 </View>
               </View>
               <View style={styles.infoItem}>
                 <Text style={styles.infoTitle}>DURATION</Text>
                 <View style={styles.infoTextWrapper}>
-                  <Text style={styles.infoText}>{item.duration}</Text>
-                  <Text style={styles.infoSubText}> minutes</Text>
+                  <Text style={styles.infoText}>60</Text>
+                  <Text style={styles.infoSubText}>sec</Text>
                 </View>
               </View>
             </View>
@@ -163,7 +163,7 @@ const styles = StyleSheet.create({
     infoTitle: {
       fontFamily: 'Lato_900Black',
       fontSize: 12,
-      color: colors.gray,
+      color: colors.darkGray,
     },
     infoTextWrapper: {
       flexDirection: 'row',
@@ -178,7 +178,7 @@ const styles = StyleSheet.create({
     infoSubText: {
       fontFamily: 'Lato_900Black',
       fontSize: 14,
-      color: colors.gray,
+      color: colors.darkGray,
     },
     buttonWrapper: {
       marginHorizontal: 20,

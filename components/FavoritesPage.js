@@ -10,19 +10,9 @@ import {
   TouchableOpacity,
   SafeAreaView,
 } from "react-native";
-import {
-  useFonts,
-  Lato_100Thin,
-  Lato_300Light,
-  Lato_400Regular,
-  Lato_700Bold,
-  Lato_900Black,
-} from "@expo-google-fonts/lato";
 import colors from "../config/colors";
 import { MaterialCommunityIcons, Entypo } from "@expo/vector-icons";
 import profile from "../assets/images/person.jpg";
-import AppLoading from "expo-app-loading";
-import { TextInput } from "react-native-gesture-handler";
 
 const FavoritesPage = ({ route, navigation }) => {
   const favoriteCelebrities = [
@@ -84,22 +74,10 @@ const FavoritesPage = ({ route, navigation }) => {
       </TouchableOpacity>
     );
   };
-  let [fontsLoaded] = useFonts({
-    Lato_100Thin,
-    Lato_300Light,
-    Lato_400Regular,
-    Lato_700Bold,
-    Lato_900Black,
-  });
-
-  //const {item} = route.params;
-
-  if (!fontsLoaded) {
-    return <AppLoading />;
-  } else {
+  
     return (
       <View style={styles.container}>
-        <ScrollView>
+        {/* <ScrollView> */}
           {/* Header */}
           <SafeAreaView>
             <View style={styles.menuWrapper}>
@@ -131,10 +109,9 @@ const FavoritesPage = ({ route, navigation }) => {
               showsHorizontalScrollIndicator={false}
             />
           </View>
-        </ScrollView>
+        {/* </ScrollView> */}
       </View>
     );
-  }
 };
 
 const styles = StyleSheet.create({
@@ -183,8 +160,6 @@ const styles = StyleSheet.create({
   },
   formWrapper: {
     marginTop: 20,
-    // borderColor: '#fff',
-    // borderWidth:2,
     paddingHorizontal: 20,
   },
   buttonWrapper: {

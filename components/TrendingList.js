@@ -5,13 +5,13 @@ import {MaterialCommunityIcons} from '@expo/vector-icons';
 import TrendingItem from './TrendingItem';
 
 // create a component
-const TrendingList = ({ trendingData, navigation }) => {
+const TrendingList = ({ trendingData, navigation, celebrities }) => {
 
     return (
       <View style={styles.discoverItemsWrapper}>
         <FlatList
           style={{ marginLeft: 20 }}
-          data={trendingData}
+          data={celebrities}
           renderItem={({item}) => <TrendingItem celebrityItem={item} navigation={navigation} />}
           keyExtractor={(item) => item.id}
           horizontal

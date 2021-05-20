@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useContext } from "react";
 import {
   View,
   Text,
@@ -6,39 +6,57 @@ import {
   Image,
   ScrollView,
   ImageBackground,
-  FlatList, 
+  FlatList,
   TouchableOpacity,
-  SafeAreaView
-} from 'react-native';
-import {
-    useFonts,
-    Lato_100Thin,
-    Lato_300Light,
-    Lato_400Regular,
-    Lato_700Bold,
-    Lato_900Black,
-  } from '@expo-google-fonts/lato';
-import colors from '../config/colors';
-import { MaterialCommunityIcons, Entypo } from '@expo/vector-icons';
-import profile from '../assets/images/person.jpg';
-import AppLoading from 'expo-app-loading';
-import { TextInput } from 'react-native-gesture-handler';
-import MButton from './UI/MButton';
+  SafeAreaView,
+  ActivityIndicator,
+} from "react-native";
+import colors from "../config/colors";
+import { MaterialCommunityIcons, Entypo } from "@expo/vector-icons";
+import profile from "../assets/images/person.jpg";
+import { TextInput } from "react-native-gesture-handler";
+import MButton from "./UI/MButton";
+import { AuthContext } from "../auth/AuthProvider";
+import { Formik } from "formik";
+import * as Yup from "yup";
+import { submitRequest } from "../api/api";
+import { useState } from "react";
 
-const RequestPage = ({route, navigation}) => {
- 
-  let [fontsLoaded] = useFonts({
-    Lato_100Thin,
-    Lato_300Light,
-    Lato_400Regular,
-    Lato_700Bold,
-    Lato_900Black,
+const RequestPage = ({ route, navigation }) => {
+  const SubmitRequestSchema = Yup.object().shape({
+    occasion: Yup.string().required("Occasion is required."),
+    who: Yup.string().required("Who field is required."),
+    instructions: Yup.string().required("Instructions are required."),
   });
 
-  const {item} = route.params;
+  const { currentUser } = useContext(AuthContext);
+  const [isLoading, setIsLoading] = useState(false);
 
-  if (!fontsLoaded) {
-    return <AppLoading />;
+  const onSubmit = async (values, onSubmitProps) => {
+    setIsLoading(true);
+    try {
+      console.log(values);
+      await submitRequest(
+        values.occasion,
+        values.who,
+        values.instructions,
+        item.id,
+        currentUser.profile.id,
+        currentUser.profile.fullName
+      );
+      onSubmitProps.resetForm();
+      setIsLoading(false);
+    } catch (error) {}
+  };
+
+  const { item } = route.params;
+
+  if (isLoading) {
+    return (
+      <View style={styles.activityIndicator}>
+        <ActivityIndicator size="large" color={colors.orange} />
+      </View>
+    );
   } else {
     return (
       <View style={styles.container}>
@@ -46,11 +64,9 @@ const RequestPage = ({route, navigation}) => {
           {/* Header */}
           <SafeAreaView>
             <View style={styles.menuWrapper}>
-            <TouchableOpacity
-              onPress={() => navigation.goBack()}
-            >
-              <Entypo name="chevron-left" size={32} color={colors.black} />
-            </TouchableOpacity>
+              <TouchableOpacity onPress={() => navigation.goBack()}>
+                <Entypo name="chevron-left" size={32} color={colors.black} />
+              </TouchableOpacity>
               <TouchableOpacity
                 onPress={() => navigation.navigate("ProfilePage")}
               >
@@ -63,35 +79,98 @@ const RequestPage = ({route, navigation}) => {
             <Text
               style={{
                 fontFamily: "Lato_700Bold",
-                fontSize: 32
+                fontSize: 32,
               }}
             >
               Request
             </Text>
-            <TouchableOpacity style={styles.learnMoreItemsWrapper}
-              onPress={ () => navigation.navigate("DetailsPage", { item: item})}>
+            <TouchableOpacity
+              style={styles.learnMoreItemsWrapper}
+              onPress={() => navigation.navigate("DetailsPage", { item: item })}
+            >
               <ImageBackground
-                resizeMethod='resize'
-                source={item.imageBig}
+                resizeMethod="resize"
+                source={{ uri: item.profilePicture.thumbnailPath }}
                 style={styles.learnMoreItem}
                 imageStyle={styles.learnMoreItemImage}
               >
-                <Text style={styles.learnMoreItemText}>{item.title}</Text>
+                <Text style={styles.learnMoreItemText}>{item.fullName}</Text>
               </ImageBackground>
             </TouchableOpacity>
-            <TextInput style={{backgroundColor: colors.gray, height: 50, borderRadius: 15, marginTop: 20, padding:10 }} placeholder="Occasion" />
-            <TextInput style={{backgroundColor: colors.gray, height: 50, borderRadius: 15, marginTop: 20, padding:10 }} placeholder="For Who?" />
-            <TextInput style={{backgroundColor: colors.gray, height: 50, borderRadius: 15, marginTop: 20, padding:10 }} 
-            multiline
-            editable
-            rows={4}
-            height={140}
-            numberOfLines={5}
-            placeholder="Instructions" />
-            <Text style={{fontFamily: 'Lato_300Light', fontSize:16, marginTop: 20, textAlign: 'justify'}}>
-            We will send you a notification email once your video is ready. The video link will be sent to saibimajdi@outlook.com.
-            </Text>
-            <MButton text="Proceed to Payment" onPress={() => alert('Proceed to Payment')} />
+            <Formik
+              validationSchema={SubmitRequestSchema}
+              initialValues={{ occasion: "", who: "", instructions: "" }}
+              onSubmit={(values) => onSubmit(values)}
+            >
+              {({
+                handleChange,
+                handleBlur,
+                handleSubmit,
+                values,
+                errors,
+                touched,
+              }) => (
+                <>
+                  <TextInput
+                    style={styles.inputField}
+                    placeholder="Occasion"
+                    onChangeText={handleChange("occasion")}
+                    onBlur={handleBlur("occasion")}
+                    value={values.occasion}
+                  />
+
+                  {errors.occasion && touched.occasion && (
+                    <Text style={styles.errorValidation}>
+                      {errors.occasion}
+                    </Text>
+                  )}
+
+                  <TextInput
+                    style={styles.inputField}
+                    placeholder="For Who?"
+                    onChangeText={handleChange("who")}
+                    onBlur={handleBlur("who")}
+                    value={values.who}
+                  />
+
+                  {errors.who && touched.who && (
+                    <Text style={styles.errorValidation}>{errors.who}</Text>
+                  )}
+
+                  <TextInput
+                    style={styles.inputField}
+                    multiline
+                    editable
+                    rows={4}
+                    height={140}
+                    numberOfLines={5}
+                    placeholder="Instructions"
+                    onChangeText={handleChange("instructions")}
+                    onBlur={handleBlur("instructions")}
+                    value={values.instructions}
+                  />
+
+                  {errors.instructions && touched.instructions && (
+                    <Text style={styles.errorValidation}>
+                      {errors.instructions}
+                    </Text>
+                  )}
+
+                  <Text
+                    style={{
+                      fontFamily: "Lato_300Light",
+                      fontSize: 16,
+                      marginTop: 20,
+                      textAlign: "justify",
+                    }}
+                  >
+                    We will send you a notification email once your video is
+                    ready. The video link will be sent to {currentUser.email}.
+                  </Text>
+                  <MButton text="Proceed to Payment" onPress={handleSubmit} />
+                </>
+              )}
+            </Formik>
           </View>
         </ScrollView>
       </View>
@@ -100,6 +179,21 @@ const RequestPage = ({route, navigation}) => {
 };
 
 const styles = StyleSheet.create({
+  activityIndicator: {
+    flex: 1,
+    justifyContent: "center",
+  },
+  errorValidation: {
+    color: "red",
+    marginBottom: 20,
+  },
+  inputField: {
+    backgroundColor: colors.lightGray,
+    height: 50,
+    borderRadius: 15,
+    marginTop: 20,
+    padding: 10,
+  },
   container: {
     paddingTop: 40,
     flex: 1,
@@ -108,9 +202,9 @@ const styles = StyleSheet.create({
   menuWrapper: {
     marginHorizontal: 20,
     marginTop: 20,
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
   },
   profileImage: {
     width: 52,
@@ -121,7 +215,7 @@ const styles = StyleSheet.create({
     marginTop: 10,
   },
   learnMoreTitle: {
-    fontFamily: 'Lato_700Bold',
+    fontFamily: "Lato_700Bold",
     fontSize: 24,
     color: colors.black,
   },
@@ -129,15 +223,15 @@ const styles = StyleSheet.create({
     paddingVertical: 20,
   },
   learnMoreItem: {
-    width: '100%',
+    width: "100%",
     height: 140,
   },
   learnMoreItemImage: {
     borderRadius: 20,
-    resizeMode: 'cover',
+    resizeMode: "cover",
   },
   learnMoreItemText: {
-    fontFamily: 'Lato_700Bold',
+    fontFamily: "Lato_700Bold",
     fontSize: 18,
     color: colors.white,
     marginHorizontal: 10,
@@ -147,9 +241,8 @@ const styles = StyleSheet.create({
     marginTop: 20,
     // borderColor: '#fff',
     // borderWidth:2,
-    paddingHorizontal:20
+    paddingHorizontal: 20,
   },
 });
-
 
 export default RequestPage;
