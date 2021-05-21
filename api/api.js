@@ -116,7 +116,23 @@ export const getCategories = async () => {
         const response = await axios.get(endpoints.GetCategories);
         // console.log(response.data);
         if(response.status == 200){
-            console.log(response.data.data.length);
+            return response.data.data;
+        }
+
+        return null;
+    } catch (error) {
+        console.error(error);
+    }
+}
+
+export const changePassword = async (currentPassword, newPassword, confirmNewPassword) => {
+    try {
+        console.log('calling changePassword...');
+        const response = await axios.post(endpoints.ChangePassword, {
+            currentPassword, newPassword, confirmNewPassword
+        });
+        console.log(response);
+        if(response.status == 200){
             return response.data.data;
         }
 

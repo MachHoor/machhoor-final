@@ -9,6 +9,7 @@ import DetailsPage from './DetailsPage';
 import ProfilePage from './ProfilePage';
 import TabNavigator from './TabNavigator';
 import MyRequestsPage from './MyRequestsPage';
+import ChangePasswordPage from './ChangePasswordPage';
 
 const Stack = createStackNavigator();
 
@@ -39,6 +40,11 @@ const AppNavigation = () => {
           <Stack.Screen
             name="MyRequestsPage"
             component={MyRequestsPage}
+            options={{ headerShown: false }}
+            />
+            <Stack.Screen
+            name="ChangePasswordPage"
+            component={ChangePasswordPage}
             options={{ headerShown: false }}
             />
         </Stack.Navigator>

@@ -17,8 +17,6 @@ import * as Yup from "yup";
 import axios from "axios";
 import { useContext, useEffect } from "react";
 import { AuthContext } from "../auth/AuthProvider";
-import AsyncStorage from "@react-native-community/async-storage";
-import * as SecureStore from 'expo-secure-store';
 
 // create a component
 const LoginPage = ({ navigation }) => {

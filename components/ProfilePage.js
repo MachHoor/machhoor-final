@@ -13,6 +13,7 @@ import { MaterialCommunityIcons, Entypo } from '@expo/vector-icons';
 import profile from '../assets/images/person.jpg';
 import MButtonOutlined from './UI/MButtonOutlined';
 import { AuthContext } from '../auth/AuthProvider';
+import ChangePasswordPage from './ChangePasswordPage';
 
 const ProfilePage = ({route, navigation}) => {
 
@@ -39,16 +40,16 @@ const ProfilePage = ({route, navigation}) => {
             <Text style={styles.email}>{currentUser.email}</Text>
           </View>
           <View style={styles.ProfileMenu}>
-            <TouchableOpacity>
+            <TouchableOpacity onPress={() => navigation.navigate('ChangePasswordPage')} >
               <View style={styles.menuItem}>
                 <View style={styles.menuItemInner}>
                   <Entypo
-                    name="menu"
+                    name="lock"
                     size={32}
                     color={colors.orange}
                     style={styles.menuIcon}
                   />
-                  <Text style={styles.menuText}>Profile Information</Text>
+                  <Text style={styles.menuText}>Change Your Password</Text>
                 </View>
                 <Entypo name="chevron-right" size={32} color={colors.black} />
               </View>
@@ -138,23 +139,6 @@ const styles = StyleSheet.create({
       fontSize: 16,
       marginLeft: 20,
       alignSelf: 'center'
-  },
-  buttonWrapper: {
-    marginTop: 40,
-    backgroundColor: 'transparent',
-    alignItems: 'center',
-    paddingVertical: 10,
-    borderRadius: 10,
-    flexDirection: 'row',
-    justifyContent: 'center',
-    borderColor: colors.orange,
-    borderWidth: 2
-  },
-  buttonText: {
-    fontFamily: 'Lato_900Black',
-    fontSize: 18,
-    color: colors.orange,
-    marginRight: 10
   },
 });
 

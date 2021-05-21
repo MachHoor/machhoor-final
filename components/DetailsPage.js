@@ -26,7 +26,6 @@ const DetailsPage = ({route, navigation}) => {
   useEffect(() => {
     async function getCelebrityAndUserRequestsLocal(){
       try{
-        console.log(item);
         const celebrityProfileId = item.id;
         const userProfileId = currentUser.profile.id;
 

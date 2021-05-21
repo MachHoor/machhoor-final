@@ -30,7 +30,6 @@ export const AuthProvider = ({children}) => {
                             await AsyncStorage.setItem('token', token);
                         }
                     }else{
-                        console.log('ERROR: Invalid email or/and password.');
                         setLoginError('Invalid email or/and password.');
                     }
                     setIsLoading(false);

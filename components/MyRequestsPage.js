@@ -24,8 +24,6 @@ const MyRequestsPage = ({navigation}) => {
   const [myRequests, setMyRequests] = useState([]);
 
   const renderRequest = ({ item }) => {
-    console.log('renderRequest');
-    console.log(item.requestForProfile);
     return (
       <TouchableOpacity
         style={styles.learnMoreItemsWrapper}
@@ -49,10 +47,10 @@ const MyRequestsPage = ({navigation}) => {
     
     const d = async () =>{
       const profileId = currentUser.profile.id;
-      console.log(profile);
+      // console.log(profile);
       
       const result = await getMyRequests(profileId);
-      console.log(result);
+      // console.log(result);
 
       if(result)
         {
