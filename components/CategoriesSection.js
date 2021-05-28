@@ -8,19 +8,16 @@ import { getCategories } from "../api/api";
 
 // create a component
 const CategoriesSection = ({ navigation }) => {
-  const [categories, setCategories] = useState([]);
+  const [categories, setCategories] = useState(null);
 
   useEffect(() => {
     getCategories().then((_categories) => {
       if (_categories) setCategories(_categories);
       console.log("_categories");
       console.log(_categories.length);
-
-      console.log("categories");
-      console.log(categories.length);
     });
   }, []);
-  if (categories.length == 0) {
+  if (!categories) {
     return (
       <View style={styles.activityIndicator}>
         <ActivityIndicator size="large" color={colors.orange} />

@@ -38,6 +38,7 @@ export const AuthProvider = ({children}) => {
                     setIsLoading(true);
                     const response = await register(fullName, emailAddress, password, confirmPassword);
 
+                    console.log(response);
                     if(response){
                         console.log(response);
                         setCurrentUser(response);

@@ -1,15 +1,14 @@
 //import liraries
 import React, { Component } from 'react';
-import { View, Text, StyleSheet } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 
-import RequestPage from './RequestPage';
-import DetailsPage from './DetailsPage';
-import ProfilePage from './ProfilePage';
+import RequestPage from '../RequestPage';
+import DetailsPage from '../DetailsPage';
+import ProfilePage from '../ProfilePage';
+import MyRequestsPage from '../MyRequestsPage';
+import ChangePasswordPage from '../ChangePasswordPage';
 import TabNavigator from './TabNavigator';
-import MyRequestsPage from './MyRequestsPage';
-import ChangePasswordPage from './ChangePasswordPage';
 
 const Stack = createStackNavigator();
 

@@ -33,8 +33,8 @@ export const register = async (fullName, emailAddress, password, confirmPassword
                 confirmPassword: confirmPassword
             });
         if(response.status == 200){
-            console.log(response.data.data);
-            return response.data.data.user;
+            if(response.data.success)
+                return response.data.data;
         }
 
         return null;
@@ -79,10 +79,10 @@ export const submitRequest = async (occasion, who, instructions, celebrityId, us
     }
 }
 
-export const getMyRequests = async (profileId) => {
+export const getMyRequests = async (userId) => {
     try {
-        console.log('calling getMyRequests with profileId=' + profileId);
-        const response = await axios.get(endpoints.GetMyRequests(profileId));
+        console.log('calling getMyRequests with profileId=' + userId);
+        const response = await axios.get(endpoints.GetMyRequests(userId));
 
         //console.log(response);
         if(response.status == 200){
@@ -125,11 +125,11 @@ export const getCategories = async () => {
     }
 }
 
-export const changePassword = async (currentPassword, newPassword, confirmNewPassword) => {
+export const changePassword = async (currentPassword, newPassword, confirmNewPassword, userId) => {
     try {
         console.log('calling changePassword...');
         const response = await axios.post(endpoints.ChangePassword, {
-            currentPassword, newPassword, confirmNewPassword
+            currentPassword, newPassword, confirmNewPassword, userId
         });
         console.log(response);
         if(response.status == 200){

@@ -8,12 +8,14 @@ import colors from '../config/colors';
 function OfflineNotice(props) {
   const netInfo = useNetInfo();
 
-  if (netInfo.type !== "unknown" && netInfo.isInternetReachable === false)
+  if (netInfo.type !== "unknown" && netInfo.isInternetReachable === false){
+    console.log(netInfo);
     return (
       <View style={styles.container}>
         <Text style={styles.text}>No Internet Connection</Text>
       </View>
     );
+  }
 
   return null;
 }

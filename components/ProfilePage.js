@@ -13,15 +13,36 @@ import { MaterialCommunityIcons, Entypo } from '@expo/vector-icons';
 import profile from '../assets/images/person.jpg';
 import MButtonOutlined from './UI/MButtonOutlined';
 import { AuthContext } from '../auth/AuthProvider';
-import ChangePasswordPage from './ChangePasswordPage';
+import * as ImagePicker from "expo-image-picker";
+import { useState } from 'react';
 
 const ProfilePage = ({route, navigation}) => {
-
+  const placeHolderImage = 'https://via.placeholder.com/150x150.png?text=O_O';
   const { logout, currentUser } = useContext(AuthContext);
+  const [profileImage, setProfileImage] = useState(currentUser.picture ?? placeHolderImage);
+  
+  const onProfilePicturePressed = async () => {
+    console.log('onProfilePicturePressed called.');
+    try{
+      const { granted } = await ImagePicker.requestMediaLibraryPermissionsAsync();
+      if (!granted) {
+        alert("You need to enable permission to access the library.");
+        return;
+      }
+      const result = await ImagePicker.launchImageLibraryAsync({
+        mediaTypes: ImagePicker.MediaTypeOptions.Images,
+        quality: 0.5,
+        aspect: [4, 3],
+      });
+      if (!result.cancelled) {
+        console.log(result);
+        setProfileImage(result.uri);
+      }
+    }
+    catch(error){
 
-  useEffect(() => {
-    console.log(currentUser);
-  }, []);
+    }
+  }
 
     return (
       <View style={styles.container}>
@@ -35,12 +56,14 @@ const ProfilePage = ({route, navigation}) => {
             </View>
           </SafeAreaView>
           <View style={styles.header}>
-            <Image source={profile} style={styles.profileImage} />
-            <Text style={styles.fullName}>{currentUser.profile && currentUser.profile.fullName}</Text>
+            <TouchableOpacity onPress={onProfilePicturePressed} >
+              <Image source={{ uri: profileImage}} style={styles.profileImage} />
+            </TouchableOpacity>
+            <Text style={styles.fullName}>{currentUser.fullName}</Text>
             <Text style={styles.email}>{currentUser.email}</Text>
           </View>
           <View style={styles.ProfileMenu}>
-            <TouchableOpacity onPress={() => navigation.navigate('ChangePasswordPage')} >
+            <TouchableOpacity onPress={() => navigation.navigate('ChangePasswordPage', { currentUser: currentUser})} >
               <View style={styles.menuItem}>
                 <View style={styles.menuItemInner}>
                   <Entypo

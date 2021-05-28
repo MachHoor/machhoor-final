@@ -27,6 +27,7 @@ const CategoryCelebrityList = ({ navigation, categories }) => {
             keyExtractor={(profile) => profile.id}
             horizontal
             showsHorizontalScrollIndicator={false}
+            ListEmptyComponent={(<Text>There's no celebrity for the moment. Try later.</Text>)}
           />
         </View>
       </View>
@@ -39,7 +40,9 @@ const CategoryCelebrityList = ({ navigation, categories }) => {
           renderItem={ ({item}) => renderCategoryList(item)}
           keyExtractor={(category) => category.id}
           vertical
-          showsHorizontalScrollIndicator={false}>
+          showsHorizontalScrollIndicator={false}
+          ListEmptyComponent={(
+          <Text style={{margin:20, alignSelf: 'center'}} >There's no celebrity for the moment. Try later.</Text>)}>
         </FlatList>
   );
 };

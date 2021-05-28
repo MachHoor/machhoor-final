@@ -74,7 +74,6 @@ const styles = StyleSheet.create({
   container: {
     paddingTop: 40,
     flex: 1,
-    color: colors.white,
   },
   menuWrapper: {
     marginHorizontal: 20,

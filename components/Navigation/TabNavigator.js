@@ -1,15 +1,13 @@
 import React from 'react';
 import { MaterialCommunityIcons, Entypo } from '@expo/vector-icons';
-import colors from '../config/colors';
+import colors from '../../config/colors';
 import { StyleSheet } from 'react-native';
 
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 
-import DetailsPage from './DetailsPage';
-import HomePage from './HomePage';
-import ProfilePage from './ProfilePage';
-import LikedPage from './LikedPage';
-import FavoritesPage from './FavoritesPage';
+import HomePage from '../HomePage';
+import ProfilePage from '../ProfilePage';
+import FavoritesPage from '../FavoritesPage';
 
 const Tab = createBottomTabNavigator();
 

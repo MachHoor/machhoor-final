@@ -9,9 +9,8 @@ import {
   Lato_900Black,
 } from "@expo-google-fonts/lato";
 import AppLoading from "expo-app-loading";
-import GlobalNavigation from './components/GlobalNavigation';
+import GlobalNavigation from './components/Navigation/GlobalNavigation';
 import { AuthProvider } from './auth/AuthProvider';
-import OfflineNotice from './components/OfflineNotice';
 
 export default function App() {
 
@@ -27,7 +26,6 @@ export default function App() {
   } else {
     return (
       <AuthProvider>
-        <OfflineNotice />
         <GlobalNavigation />
       </AuthProvider>
     );

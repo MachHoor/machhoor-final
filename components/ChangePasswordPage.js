@@ -9,8 +9,9 @@ import profile from "../assets/images/person.jpg";
 import { changePassword } from '../api/api';
 
 // create a component
-const ChangePasswordPage = ({navigation}) => {
+const ChangePasswordPage = ({navigation, route}) => {
 
+    const {currentUser} = route.params;
     const ChangePasswordSchema = Yup.object().shape({
         oldPassword: Yup.string().required("Enter the old password."),
         newPassword: Yup.string().min(4, "New Password is too short.").required("Password is required."),
@@ -18,7 +19,7 @@ const ChangePasswordPage = ({navigation}) => {
       });
 
       const onSubmit = async ({oldPassword, newPassword, confirmNewPassword}) => {
-        await changePassword(oldPassword, newPassword, confirmNewPassword);
+        await changePassword(oldPassword, newPassword, confirmNewPassword, currentUser.id);
         navigation.navigate("ProfilePage");
       }
 

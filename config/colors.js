@@ -1,10 +1,11 @@
 export default colors = {
     primary: '#E63966',
-    gray: '#D1D3D2',
+    gray: '#E63966',
     lightGray: '#F2F2F2',
     black: '#0C0D0E',
     white: '#FBFCFE',
-    orange: '#0F3759'
+    orange: '#0F3759',
+    background: '#F2E4D8'
 } 
 
 

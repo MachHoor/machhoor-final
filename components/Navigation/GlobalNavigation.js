@@ -2,9 +2,12 @@
 import AsyncStorage from "@react-native-community/async-storage";
 import React, { useContext } from "react";
 import { useEffect } from "react";
-import { AuthContext } from "../auth/AuthProvider";
+import { View } from "react-native";
+import { AuthContext } from "../../auth/AuthProvider";
 import AppNavigation from "./AppNavigation";
 import AuthNavigation from "./AuthNavigation";
+import OfflineNotice from "../OfflineNotice";
+import colors from '../../config/colors';
 
 // create a component
 const GlobalNavigation = () => {
@@ -24,9 +27,10 @@ const GlobalNavigation = () => {
 }, []);
 
   return (
-    <>
+    <View style={{ flex:1, backgroundColor: colors.background }}>
+      <OfflineNotice />
       {currentUser ? <AppNavigation /> : <AuthNavigation />}
-    </>
+    </View>
   );
 };
 

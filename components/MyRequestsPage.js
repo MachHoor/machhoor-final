@@ -46,10 +46,10 @@ const MyRequestsPage = ({navigation}) => {
   useEffect(() => {
     
     const d = async () =>{
-      const profileId = currentUser.profile.id;
+      const userId = currentUser.id;
       // console.log(profile);
       
-      const result = await getMyRequests(profileId);
+      const result = await getMyRequests(userId);
       // console.log(result);
 
       if(result)
@@ -84,6 +84,8 @@ const MyRequestsPage = ({navigation}) => {
               renderItem={renderRequest}
               keyExtractor={(item) => item.id}
               showsHorizontalScrollIndicator={false}
+              ListEmptyComponent={(
+                <Text style={{margin:20, alignSelf: 'center'}} >There's no request for the moment. Try later.</Text>)}
             />
             <Text style={styles.statusText}>In Progress</Text>
             <Text style={styles.statusText}>Completed</Text>

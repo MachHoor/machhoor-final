@@ -16,6 +16,8 @@ const TrendingList = ({ trendingData, navigation, celebrities }) => {
           keyExtractor={(item) => item.id}
           horizontal
           showsHorizontalScrollIndicator={false}
+          ListEmptyComponent={(
+          <Text style={{margin:20, alignSelf: 'center'}} >Trending not available for the moment. Try later.</Text>)}
         />
       </View>
     );
