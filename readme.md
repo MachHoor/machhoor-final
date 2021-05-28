@@ -5,6 +5,7 @@
 - [X] Load categories/celebrities.  
 - [x] Manage Requests.  
 - [x] Register/Login.  
+- [ ] Update user Picture.  
 - [ ] Implement follow the process.  
 - [ ] Update Profile.  
 - [ ] Logging.  
