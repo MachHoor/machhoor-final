@@ -23,8 +23,9 @@ import { MaterialCommunityIcons } from "@expo/vector-icons";
 import profile from "../assets/images/person.jpg";
 import AppLoading from "expo-app-loading";
 import TrendingSection from "./TrendingSection";
-import CategoryCelebrityList from "./CategoryCelebrityList";
 import CategoriesSection from "./CategoriesSection";
+import { useContext } from "react";
+import { AuthContext } from "../auth/AuthProvider";
 
 const HomePage = ({ navigation }) => {
 
@@ -35,6 +36,8 @@ const HomePage = ({ navigation }) => {
     Lato_700Bold,
     Lato_900Black,
   });
+
+  const {currentUser} = useContext(AuthContext);
   
   if (!fontsLoaded) {
     return <AppLoading />;
@@ -53,7 +56,7 @@ const HomePage = ({ navigation }) => {
               <TouchableOpacity
                 onPress={() => navigation.navigate("ProfilePage")}
               >
-                <Image source={profile} style={styles.profileImage} />
+                <Image source={{ uri: currentUser.picture }} style={styles.profileImage} />
               </TouchableOpacity>
             </View>
           </SafeAreaView>

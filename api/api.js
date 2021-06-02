@@ -142,3 +142,12 @@ export const changePassword = async (currentPassword, newPassword, confirmNewPas
     }
 }
 
+export const uploadProfilePicture = async (userId, imageFormData) => {
+    try {
+        console.log('calling uploadProfilePicture...');
+        console.log('endpoint ' + endpoints.UploadProfilePicture(userId));
+        const response = await axios.post(endpoints.UploadProfilePicture(userId), imageFormData);
+    } catch (error) {
+        
+    }
+}

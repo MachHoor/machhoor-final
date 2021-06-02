@@ -15,6 +15,7 @@ import MButtonOutlined from './UI/MButtonOutlined';
 import { AuthContext } from '../auth/AuthProvider';
 import * as ImagePicker from "expo-image-picker";
 import { useState } from 'react';
+import { uploadProfilePicture } from '../api/api';
 
 const ProfilePage = ({route, navigation}) => {
   const placeHolderImage = 'https://via.placeholder.com/150x150.png?text=O_O';
@@ -37,10 +38,20 @@ const ProfilePage = ({route, navigation}) => {
       if (!result.cancelled) {
         console.log(result);
         setProfileImage(result.uri);
+
+        let data = new FormData();
+        data.append("img", {
+          uri: result.uri,
+          name: 'newProfileImage.jpg',
+          type: 'image/jpg'
+        });
+
+        await uploadProfilePicture(currentUser.id, data);
+
       }
     }
     catch(error){
-
+      console.error(error);
     }
   }
 
