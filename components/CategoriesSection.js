@@ -14,7 +14,7 @@ const CategoriesSection = ({ navigation }) => {
     getCategories().then((_categories) => {
       if (_categories) setCategories(_categories);
       console.log("_categories");
-      console.log(_categories.length);
+      console.log(_categories);
     });
   }, []);
   if (!categories) {

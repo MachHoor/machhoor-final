@@ -14,7 +14,7 @@ const TrendingItem = ({celebrityItem, navigation}) => {
           }
         >
           <ImageBackground
-            source={{ uri: celebrityItem.profilePicture.thumbnailPath }}
+            source={{ uri: celebrityItem.picture }}
             style={[styles.trendingItem]}
             imageStyle={styles.trendingItemImage}
           >

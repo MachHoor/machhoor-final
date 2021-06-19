@@ -46,7 +46,7 @@ const DetailsPage = ({route, navigation}) => {
       return (
         <View style={styles.container}>
           <ImageBackground
-            source={{ uri: item.profilePicture.thumbnailPath}}
+            source={{ uri: item.picture}}
             style={styles.backgroundImage}
           >
             <TouchableOpacity
@@ -69,14 +69,14 @@ const DetailsPage = ({route, navigation}) => {
             </View>
             <View style={styles.descriptionTextWrapper}>
               <Text style={styles.descriptionTitle}>Description</Text>
-              <Text style={styles.descriptionText}>{item.bio}</Text>
+              <Text style={styles.descriptionText}>{item.about}</Text>
             </View>
 
             <View style={styles.infoWrapper}>
               <View style={styles.infoItem}>
                 <Text style={styles.infoTitle}>PRICE</Text>
                 <View style={styles.infoTextWrapper}>
-                  <Text style={styles.infoText}>100 DT</Text>
+                  <Text style={styles.infoText}>{item.price} DT</Text>
                   <Text style={styles.infoSubText}>/minute</Text>
                 </View>
               </View>
@@ -90,7 +90,7 @@ const DetailsPage = ({route, navigation}) => {
               <View style={styles.infoItem}>
                 <Text style={styles.infoTitle}>DURATION</Text>
                 <View style={styles.infoTextWrapper}>
-                  <Text style={styles.infoText}>60</Text>
+                  <Text style={styles.infoText}>{item.videoMaxLength}</Text>
                   <Text style={styles.infoSubText}>sec</Text>
                 </View>
               </View>

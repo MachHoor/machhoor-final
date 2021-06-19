@@ -21,13 +21,16 @@ const ProfilePage = ({route, navigation}) => {
   const placeHolderImage = 'https://via.placeholder.com/150x150.png?text=O_O';
   const { logout, currentUser } = useContext(AuthContext);
   const [profileImage, setProfileImage] = useState(currentUser.picture ?? placeHolderImage);
+  const [isLoading, setIsLoading] = useState(false);
   
   const onProfilePicturePressed = async () => {
+    setIsLoading(true);
     console.log('onProfilePicturePressed called.');
     try{
       const { granted } = await ImagePicker.requestMediaLibraryPermissionsAsync();
       if (!granted) {
         alert("You need to enable permission to access the library.");
+        setIsLoading(false);
         return;
       }
       const result = await ImagePicker.launchImageLibraryAsync({
@@ -48,6 +51,7 @@ const ProfilePage = ({route, navigation}) => {
 
         await uploadProfilePicture(currentUser.id, data);
 
+        setIsLoading(false);
       }
     }
     catch(error){
@@ -55,6 +59,13 @@ const ProfilePage = ({route, navigation}) => {
     }
   }
 
+  if (isLoading) {
+    return (
+      <View style={styles.activityIndicator}>
+        <ActivityIndicator size="large" color={colors.orange} />
+      </View>
+    );
+  } else {
     return (
       <View style={styles.container}>
         <ScrollView>
@@ -122,9 +133,14 @@ const ProfilePage = ({route, navigation}) => {
         </ScrollView>
       </View>
     );
+  }
 };
 
 const styles = StyleSheet.create({
+  activityIndicator: {
+    flex: 1,
+    justifyContent: "center",
+  },
   ProfileMenu: {
     marginHorizontal: 30,
     marginVertical: 40

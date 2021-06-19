@@ -7,14 +7,15 @@ import CelebrityListItem from "./CelebrityListItem";
 const CategoryCelebrityList = ({ navigation, categories }) => {
 
   const renderCategoryList = (category) => {
-    
+    console.log('category');
+    console.log(category);
     return (
       <View style={styles.categoryListWrapper}>
         <Text style={styles.categoryListTitle}>{category.name}</Text>
         <View style={styles.categoryListItemsWrapper}>
           <FlatList
             style={{ marginLeft: 20 }}
-            data={category.profiles}
+            data={category.celebrities}
             renderItem={({ item }) => {
               item.category = category;
               return (
